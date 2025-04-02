@@ -46,5 +46,17 @@
         "os": "abc",
         "cpu": 12,
         "ram": 12
+    },
+    {
+        "name": "Device_test_1",
+        "os": "windows",
+        "cpu": 12,
+        "ram": 90
+    },
+    {
+        "name": "testtt",
+        "os": "tt",
+        "cpu": 21,
+        "ram": 21
     }
 ]

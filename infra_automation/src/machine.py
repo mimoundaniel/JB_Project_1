@@ -1,11 +1,6 @@
 from pydantic import BaseModel, field_validator
 import logging
 
-
-
-logging.basicConfig(level=logging.INFO, filename='infra_automation/logs/provisioning.log', filemode='a',
-                    format='%(asctime)s - %(levelname)s - %(message)s')
-
 class Machine(BaseModel):
     name: str
     os: str
@@ -19,7 +14,7 @@ class Machine(BaseModel):
         return value
 
     def to_dict(self):
-        return self.dict()
+        return self.model_dump()
 
     def __init__(self, **data):
         super().__init__(**data)

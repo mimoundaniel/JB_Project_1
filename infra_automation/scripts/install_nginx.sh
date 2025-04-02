@@ -3,9 +3,8 @@
 LOG_FILE="infra_automation/logs/provisioning.log"
 
 log_message() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
-}
-
+    echo "$(date '+%Y-%m-%d %H:%M:%S'),$(date '+%N' | cut -c1-3) - INFO - $1" >> "$LOG_FILE"
+    }
 if command -v nginx &> /dev/null; then
     log_message "Nginx is already installed."
     echo "Nginx is already installed."

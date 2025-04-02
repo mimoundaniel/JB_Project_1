@@ -5,6 +5,9 @@ import logging
 from infra_automation.src.machine import Machine
 from pydantic import ValidationError
 
+
+logging.basicConfig(level=logging.INFO, filename='infra_automation/logs/provisioning.log', filemode='a',format='%(asctime)s - %(levelname)s - %(message)s')
+
 def save_data_in_json(data):
     config_dir = os.path.join("infra_automation", "configs")
     file_path = os.path.join(config_dir, "instances.json")
@@ -27,12 +30,13 @@ def save_data_in_json(data):
         json.dump(existing_data, f, indent=4)
 
 def input_from_user():
-    name = input("Enter a name of the device: ")
+    name = input("Enter a name of the device or exit to quit ")
+    if name.lower() == "exit":
+        return "exit"
     os_type = input("Enter the OS: ")
     cpu = input("Enter a number of CPU: ")
     ram = input("Enter a number of RAM: ")
-    logging.basicConfig(level=logging.INFO, filename='infra_automation/logs/provisioning.log', filemode='a',
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+
     try:
         cpu = int(cpu)
         ram = int(ram)
@@ -65,13 +69,19 @@ def run_bashfile():
         print("Error while running bash script.")
         return False
 
-vm_data = input_from_user()
 
-if vm_data:
-    save_data_in_json(vm_data)
-    print("Machine created successfully.")
+while True:
+    vm_data = input_from_user()
 
-    if run_bashfile():
-        print("Nginx installation completed successfully.")
-    else:
-        print("Nginx installation failed.")
+    if vm_data == "exit":
+        print("bye log out")
+        break
+
+    if vm_data:
+        save_data_in_json(vm_data)
+        print("Machine created successfully.")
+
+        if run_bashfile():
+            print("Nginx installation completed successfully.")
+        else:
+            print("Nginx installation failed.")
